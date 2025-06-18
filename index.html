@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Portofolio Yusuf</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+            height: 100%;
+        }
+
+        .main-scroll {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            position: relative;
+        }
+
+        section.snap {
+            height: 100vh;
+            scroll-snap-align: start;
+            padding: 3rem;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: #f5f5f5;
+            padding: 2rem 1rem;
+        }
+
+        .sidebar .menu-list a {
+            padding: 0.5rem;
+            display: block;
+            border-radius: 4px;
+        }
+
+        .sidebar .menu-list a.is-active {
+            background-color: #4f7fcc;
+            color: white;
+            font-weight: bold;
+        }
+
+        #backToTop {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 10;
+            display: none;
+        }
+
+        .avatar-container {
+            width: 128px;
+            height: 128px;
+            position: relative;
+            perspective: 1000px;
+            margin: 0 auto;
+        }
+
+        .avatar-flip {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .avatar-container:hover .avatar-flip {
+            transform: rotateY(180deg);
+        }
+
+        .avatar-front,
+        .avatar-back {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .avatar-back {
+            transform: rotateY(180deg);
+        }
+
+        .vertical-timeline {
+            position: relative;
+            margin-left: 2rem;
+            padding-left: 2rem;
+            border-left: 3px solid #4a4a4a;
+        }
+
+        .timeline-entry {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-entry::before {
+            content: "";
+            position: absolute;
+            left: -1.3rem;
+            top: 0;
+            width: 1rem;
+            height: 1rem;
+            background-color: #3273dc;
+            /* warna bulatan */
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 0 0 2px #3273dc;
+        }
+
+        .timeline-date {
+            font-weight: bold;
+            color: #363636;
+            margin-bottom: 0.2rem;
+        }
+
+        .timeline-content {
+            color: #4a4a4a;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="columns is-gapless">
+        <!-- Sidebar -->
+        <div class="column is-3 sidebar">
+            <div class="has-text-centered">
+                <figure class="image is-128x128 is-inline-block">
+                    <img class="is-rounded" src="img/avatar.jpg" alt="Foto Profil" />
+                </figure>
+                <h1 class="title is-4">Yusuf Arifin</h1>
+                <h2 class="subtitle is-6">Web Developer</h2>
+            </div>
+
+            <aside class="menu has-text-centered mt-6">
+                <ul class="menu-list">
+                    <li><a href="#beranda" class="menu-link" data-section="beranda">Beranda</a></li>
+                    <li><a href="#skill" class="menu-link" data-section="skill">Skill</a></li>
+                    <li><a href="#proyek" class="menu-link" data-section="proyek">Proyek</a></li>
+                    <li><a href="#pengalaman" class="menu-link" data-section="pengalaman">Pengalaman</a></li>
+                    <li><a href="#pendidikan" class="menu-link" data-section="pendidikan">Pendidikan</a></li>
+                    <li><a href="#kontak" class="menu-link" data-section="kontak">Kontak</a></li>
+                    <li><a href="#cv" class="menu-link" data-section="cv">CV Download</a></li>
+                </ul>
+            </aside>
+        </div>
+
+        <!-- Konten utama -->
+        <div class="column is-9 main-scroll" id="mainScroll">
+            <section class="snap has-background-white" id="beranda">
+                <div class="container">
+                    <h3 class="title is-2"><span id="typing"></span><span class="has-text-primary">|</span></h3>
+                    <hr>
+                    <p>Selamat datang di portofolio saya. Saya adalah pengembang web yang berfokus pada backend dan API
+                        development.</p>
+                </div>
+            </section>
+
+            <section class="snap has-background-white" id="skill">
+                <div class="container">
+                    <h3 class="title is-2">Skill</h3>
+                    <hr>
+                    <div class="tags">
+                        <span class="tag is-info">PHP</span>
+                        <span class="tag is-success">Laravel</span>
+                        <span class="tag is-dark">MySQL</span>
+                        <span class="tag is-link">JavaScript</span>
+                        <span class="tag is-warning">Vue.js</span>
+                        <span class="tag is-primary">Python</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="snap has-background-white" id="proyek">
+                <div class="container">
+                    <h3 class="title is-2">Proyek</h3>
+                    <hr>
+                    <div class="columns is-multiline">
+                        <!-- Proyek cards -->
+                    </div>
+                </div>
+            </section>
+
+            <section class="snap has-background-white" id="pengalaman">
+                <div class="container">
+                    <h3 class="title is-2">Pengalaman</h3>
+                    <hr>
+                    <div class="vertical-timeline">
+                        <div class="timeline-entry">
+                            <p class="timeline-date">2021 - Sekarang</p>
+                            <p class="timeline-content"><strong>Freelance Developer</strong><br>Mengerjakan proyek
+                                website dan API.
+                            </p>
+                        </div>
+                        <div class="timeline-entry">
+                            <p class="timeline-date">2020 - 2021</p>
+                            <p class="timeline-content"><strong>PT Digital Nusantara</strong><br>Backend Developer –
+                                Laravel & REST
+                                API.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="snap has-background-white" id="pendidikan">
+                <div class="container">
+                    <h3 class="title is-2">Pendidikan</h3>
+                    <hr>
+                    <div class="vertical-timeline">
+                        <div class="timeline-entry">
+                            <p class="timeline-date">2016 - 2020</p>
+                            <p class="timeline-content"><strong>Universitas Teknologi</strong><br>S1 Informatika</p>
+                        </div>
+                        <div class="timeline-entry">
+                            <p class="timeline-date">2013 - 2016</p>
+                            <p class="timeline-content"><strong>SMK Negeri 1</strong><br>Rekayasa Perangkat Lunak</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="snap has-background-white" id="kontak">
+                <div class="container">
+                    <h3 class="title is-2">Kontak</h3>
+                    <hr>
+                    <p>Email: yusuf@example.com</p>
+                    <p>WhatsApp: +62 812-3456-7890</p>
+                    <p>LinkedIn: linkedin.com/in/yusufarifin</p>
+                </div>
+            </section>
+
+            <section class="snap has-background-white" id="cv">
+                <div class="container">
+                    <h3 class="title is-2">CV</h3>
+                    <hr>
+                    <a class="button is-link" href="cv/yusuf-cv.pdf" target="_blank">Download CV (PDF)</a>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="button is-primary is-rounded">↑ Top</button>
+
+    <!-- JavaScript -->
+    <script>
+        // Scroll active section highlight (tetap)
+        const sections = document.querySelectorAll("section.snap");
+        const menuLinks = document.querySelectorAll(".menu-link");
+        const backToTop = document.getElementById("backToTop");
+        const scrollContainer = document.getElementById("mainScroll");
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id;
+                    menuLinks.forEach(link => {
+                        link.classList.toggle("is-active", link.dataset.section === id);
+                    });
+                }
+            });
+        }, {
+            root: scrollContainer,
+            threshold: 0.6
+        });
+
+        sections.forEach(section => observer.observe(section));
+
+        scrollContainer.addEventListener("scroll", () => {
+            backToTop.style.display = scrollContainer.scrollTop > 100 ? "block" : "none";
+        });
+
+        backToTop.addEventListener("click", () => {
+            scrollContainer.scrollTo({ top: 0, behavior: "smooth" });
+        });
+
+        // Typing effect
+        const typingElement = document.getElementById("typing");
+        const texts = ["Halo, saya Yusuf!", "Web Developer", "Backend Specialist"];
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function type() {
+            const currentText = texts[textIndex];
+            if (isDeleting) {
+                typingElement.textContent = currentText.substring(0, charIndex--);
+            } else {
+                typingElement.textContent = currentText.substring(0, charIndex++);
+            }
+
+            let delay = isDeleting ? 60 : 100;
+
+            if (!isDeleting && charIndex === currentText.length) {
+                delay = 1500; // jeda sebelum hapus
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                textIndex = (textIndex + 1) % texts.length;
+                delay = 500; // jeda sebelum mulai teks baru
+            }
+
+            setTimeout(type, delay);
+        }
+
+        type();
+    </script>
+</body>
+
+
+</html>
