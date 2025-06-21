@@ -1,78 +1,59 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Portofolio Yusuf</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         html,
         body {
-            margin: 0;
-            padding: 0;
             scroll-behavior: smooth;
-            height: 100%;
+            font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-weight: 500;
         }
 
-        .main-scroll {
-            height: 100vh;
-            overflow-y: scroll;
-            scroll-snap-type: y mandatory;
-            position: relative;
-        }
-
-        section.snap {
-            height: 100vh;
-            scroll-snap-align: start;
-            padding: 3rem;
+        body {
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
         .sidebar {
+            background: #e0dede;
+            min-width: 250px;
+            max-width: 250px;
             position: sticky;
             top: 0;
             height: 100vh;
+            padding: 1rem;
+        }
+
+        .profile-pic {
+            perspective: 1000px;
+            width: 100%;
             display: flex;
-            flex-direction: column;
             justify-content: center;
-            background-color: #f5f5f5;
-            padding: 2rem 1rem;
-        }
-
-        .sidebar .menu-list a {
-            padding: 0.5rem;
-            display: block;
-            border-radius: 4px;
-        }
-
-        .sidebar .menu-list a.is-active {
-            background-color: #4f7fcc;
-            color: white;
-            font-weight: bold;
-        }
-
-        #backToTop {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            z-index: 10;
-            display: none;
         }
 
         .avatar-container {
-            width: 128px;
-            height: 128px;
-            position: relative;
-            perspective: 1000px;
-            margin: 0 auto;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 5px solid #b2ebf2;
+            overflow: hidden;
         }
 
         .avatar-flip {
             width: 100%;
             height: 100%;
-            position: absolute;
-            transition: transform 0.6s;
+            position: relative;
             transform-style: preserve-3d;
+            transition: transform 0.6s;
         }
 
         .avatar-container:hover .avatar-flip {
@@ -81,9 +62,9 @@
 
         .avatar-front,
         .avatar-back {
+            position: absolute;
             width: 100%;
             height: 100%;
-            position: absolute;
             backface-visibility: hidden;
             border-radius: 50%;
             overflow: hidden;
@@ -93,230 +74,372 @@
             transform: rotateY(180deg);
         }
 
-        .vertical-timeline {
-            position: relative;
-            margin-left: 2rem;
-            padding-left: 2rem;
-            border-left: 3px solid #4a4a4a;
+        .avatar-front img,
+        .avatar-back img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
-        .timeline-entry {
-            position: relative;
-            margin-bottom: 2rem;
+        .sidebar .menu a {
+            display: block;
+            padding: 0.5rem;
+            text-decoration: none;
+            color: #333;
         }
 
-        .timeline-entry::before {
-            content: "";
-            position: absolute;
-            left: -1.3rem;
-            top: 0;
-            width: 1rem;
-            height: 1rem;
-            background-color: #3273dc;
-            /* warna bulatan */
-            border-radius: 50%;
-            border: 2px solid white;
-            box-shadow: 0 0 0 2px #3273dc;
+        .sidebar .menu a.active {
+            background-color: #76aaee;
+            border-radius: 5px;
         }
 
-        .timeline-date {
-            font-weight: bold;
-            color: #363636;
-            margin-bottom: 0.2rem;
+        .sidebar .menu a:hover {
+            background-color: #a4c4ee;
+            border-radius: 5px;
         }
 
-        .timeline-content {
-            color: #4a4a4a;
+        .content {
+            flex: 1;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            height: 100vh;
+            scroll-behavior: smooth;
+        }
+
+        section {
+            height: 100vh;
+            scroll-snap-align: start;
+            padding: 2rem;
+            background: #ffffff;
+        }
+
+        .section-inner {
+            height: 80vh;
+            overflow-y: auto;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                left: -250px;
+                z-index: 1050;
+                transition: left 0.3s ease;
+            }
+
+            .sidebar.show {
+                left: 0;
+            }
+
+            .sidebar-toggle {
+                position: fixed;
+                top: 10px;
+                left: 10px;
+                z-index: 1100;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="columns is-gapless">
-        <!-- Sidebar -->
-        <div class="column is-3 sidebar">
-            <div class="has-text-centered">
-                <figure class="image is-128x128 is-inline-block">
-                    <img class="is-rounded" src="img/avatar.jpg" alt="Foto Profil" />
-                </figure>
-                <h1 class="title is-4">Yusuf Arifin</h1>
-                <h2 class="subtitle is-6">Web Developer</h2>
+    <button class="btn btn-primary sidebar-toggle d-md-none">☰</button>
+
+    <aside class="sidebar">
+        <div class="profile-pic mb-3">
+            <div class="avatar-container">
+                <div class="avatar-flip">
+                    <div class="avatar-front">
+                        <img src="img/avatar.jpg" alt="Avatar Depan">
+                    </div>
+                    <div class="avatar-back">
+                        <img src="img/avatar-2.jpg" alt="Avatar Belakang">
+                    </div>
+                </div>
             </div>
-
-            <aside class="menu has-text-centered mt-6">
-                <ul class="menu-list">
-                    <li><a href="#beranda" class="menu-link" data-section="beranda">Beranda</a></li>
-                    <li><a href="#skill" class="menu-link" data-section="skill">Skill</a></li>
-                    <li><a href="#proyek" class="menu-link" data-section="proyek">Proyek</a></li>
-                    <li><a href="#pengalaman" class="menu-link" data-section="pengalaman">Pengalaman</a></li>
-                    <li><a href="#pendidikan" class="menu-link" data-section="pendidikan">Pendidikan</a></li>
-                    <li><a href="#kontak" class="menu-link" data-section="kontak">Kontak</a></li>
-                    <li><a href="#cv" class="menu-link" data-section="cv">CV Download</a></li>
-                </ul>
-            </aside>
         </div>
+        <h4 class="text-center"><b>Yusuf Arifin</b></h4>
+        <p class="text-center"><b>FullStack Developer</b></p>
+        <nav class="menu">
+            <a href="#about" class="active">Beranda</a>
+            <a href="#skill">Keahlian</a>
+            <a href="#experience">Pengalaman Kerja</a>
+            <a href="#education">Pendidikan</a>
+            <a href="#contact">Kontak</a>
+            <a href="#download-cv">CV</a>
+        </nav>
+    </aside>
 
-        <!-- Konten utama -->
-        <div class="column is-9 main-scroll" id="mainScroll">
-            <section class="snap has-background-white" id="beranda">
-                <div class="container">
-                    <h3 class="title is-2"><span id="typing"></span><span class="has-text-primary">|</span></h3>
-                    <hr>
-                    <p>Selamat datang di portofolio saya. Saya adalah pengembang web yang berfokus pada backend dan API
-                        development.</p>
-                </div>
-            </section>
-
-            <section class="snap has-background-white" id="skill">
-                <div class="container">
-                    <h3 class="title is-2">Skill</h3>
-                    <hr>
-                    <div class="tags">
-                        <span class="tag is-info">PHP</span>
-                        <span class="tag is-success">Laravel</span>
-                        <span class="tag is-dark">MySQL</span>
-                        <span class="tag is-link">JavaScript</span>
-                        <span class="tag is-warning">Vue.js</span>
-                        <span class="tag is-primary">Python</span>
+    <main class="content" id="scrollContainer">
+        <section id="about">
+            <h1><b id="typing"></b><b class="has-text-primary">|</b></h1>
+            <hr>
+            <div class="section-inner">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 id="clock"> </h2>
                     </div>
                 </div>
-            </section>
-
-            <section class="snap has-background-white" id="proyek">
-                <div class="container">
-                    <h3 class="title is-2">Proyek</h3>
-                    <hr>
-                    <div class="columns is-multiline">
-                        <!-- Proyek cards -->
+                <div class="card mt-2">
+                    <div class="card-body" style="text-align: justify;">
+                        Saya adalah seorang Web Developer dengan pengalaman lebih dari 3 tahun di bidang pengembangan
+                        aplikasi berbasis web
+                        menggunakan teknologi seperti PHP, JavaScript, API, dan SQL/MySQL. Berpengalaman dalam membangun
+                        dan memelihara aplikasi
+                        yang efisien dan scalable, serta mengintegrasikan sistem dengan berbagai API. Saya memiliki
+                        kemampuan troubleshooting
+                        yang kuat, mampu bekerja baik secara tim maupun mandiri, serta selalu berkomitmen untuk terus
+                        mengembangkan keterampilan
+                        teknologi terbaru guna mendukung kebutuhan bisnis yang dinamis.
                     </div>
                 </div>
-            </section>
-
-            <section class="snap has-background-white" id="pengalaman">
-                <div class="container">
-                    <h3 class="title is-2">Pengalaman</h3>
-                    <hr>
-                    <div class="vertical-timeline">
-                        <div class="timeline-entry">
-                            <p class="timeline-date">2021 - Sekarang</p>
-                            <p class="timeline-content"><strong>Freelance Developer</strong><br>Mengerjakan proyek
-                                website dan API.
-                            </p>
-                        </div>
-                        <div class="timeline-entry">
-                            <p class="timeline-date">2020 - 2021</p>
-                            <p class="timeline-content"><strong>PT Digital Nusantara</strong><br>Backend Developer –
-                                Laravel & REST
-                                API.</p>
-                        </div>
+            </div>
+        </section>
+        <section id="skill">
+            <h1><i class="fa-solid fa-fill-drip"></i> Keahlian</h1>
+            <hr>
+            <div class="section-inner">
+                <div class="card">
+                    <div class="card-body" style="height: 70vh;">
+                        <ol class="list-group list-group-numbered">
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto">
+                                    <div class="fw-bold">Hard Skill</div>
+                                    Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non
+                                </div>
+                                <span class="badge bg-primary rounded-pill">14</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto">
+                                    <div class="fw-bold">Soft skill</div>
+                                    Cras justo odio
+                                </div>
+                                <span class="badge bg-primary rounded-pill">14</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto">
+                                    <div class="fw-bold">Lainnya</div>
+                                    Cras justo odio
+                                </div>
+                                <span class="badge bg-primary rounded-pill">14</span>
+                            </li>
+                        </ol>
                     </div>
                 </div>
-            </section>
-
-            <section class="snap has-background-white" id="pendidikan">
-                <div class="container">
-                    <h3 class="title is-2">Pendidikan</h3>
-                    <hr>
-                    <div class="vertical-timeline">
-                        <div class="timeline-entry">
-                            <p class="timeline-date">2016 - 2020</p>
-                            <p class="timeline-content"><strong>Universitas Teknologi</strong><br>S1 Informatika</p>
+            </div>
+        </section>
+        <section id="experience">
+            <h1><i class="fa-solid fa-earth-asia"></i> Pengalaman</h1>
+            <hr>
+            <div class="section-inner">
+                <ol class="list-group list-group-numbered" style="text-align: justify;height: 70vh;">
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">RSIA Stella Maris</div>
+                            IT Programmer
+                            <ul>
+                                <li>Membangun, mengembangkan, dan memelihara aplikasi rumah sakit, seperti
+                                    Sistem Informasi Rumah Sakit (HIS), Electronic Medical Record (EMR), atau
+                                    aplikasi-aplikasi khusus lainnya yang digunakan dalam administrasi,
+                                    keuangan,
+                                    dan pelayanan medis.</li>
+                                <li>Analisis kebutuhan pengguna untuk memastikan aplikasi yang dikembangkan
+                                    sesuai dengan kebutuhan operasional dan regulasi di rumah sakit.
+                                <li>Memperbaiki bug dan melakukan pembaruan (update) sistem aplikasi agar tetap
+                                    berfungsi dengan baik dan aman.</li>
+                                <li>Integrasi sistem dengan aplikasi pihak ketiga, seperti laboratorium,
+                                    farmasi,
+                                    atau radiologi.</li>
+                                <li>Membuat dokumentasi teknis yang jelas untuk aplikasi yang dikembangkan.</li>
+                                <li>Memberikan dukungan kepada pengguna (user support), terutama staf medis dan
+                                    administrasi rumah sakit, terkait permasalahan perangkat keras, perangkat
+                                    lunak,
+                                    atau jaringan.</li>
+                                <li>Troubleshooting masalah teknis, baik software maupun hardware, untuk
+                                    memastikan semua peralatan dan sistem IT rumah sakit berfungsi dengan baik.
+                                    Mengelola database rumah sakit termasuk optimasi kinerja database dan
+                                    memastikan integritas serta keamanan data.</li>
+                            </ul>
                         </div>
-                        <div class="timeline-entry">
-                            <p class="timeline-date">2013 - 2016</p>
-                            <p class="timeline-content"><strong>SMK Negeri 1</strong><br>Rekayasa Perangkat Lunak</p>
+                        <span class="badge bg-info rounded-pill">2022-2025</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">Freelance & Project</div>
+                            <ul>
+                                <li>Pengembangan aplikasi berbasis web menggunakan PHP, JavaScript, API, dan
+                                    SQL/MySQL.</li>
+                                <li>Integrasi sistem dengan berbagai API untuk meningkatkan fungsionalitas
+                                    aplikasi.</li>
+                                <li>Pengembangan dan pemeliharaan aplikasi yang efisien dan scalable.</li>
+                                <li>Pengalaman dalam troubleshooting masalah teknis pada aplikasi web.</li>
+                                <li>Kemampuan bekerja baik secara tim maupun mandiri dalam proyek pengembangan
+                                    aplikasi.</li>
                         </div>
+                        <span class="badge bg-primary rounded-pill">2020 - Sekarang</span>
+                    </li>
+                </ol>
+            </div>
+        </section>
+        <section id="education">
+            <h1><i class="fa-solid fa-shapes"></i> Pendidikan</h1>
+            <hr>
+            <div class="section-inner">
+                <ol class="list-group list-group-numbered" style="text-align: justify;height: 70vh;">
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">Teknik Informatika</div>
+                            Universitas Islam Riau
+                            <ul>
+                                <li>Judul Skripsi "Sistem Chatbot Toko
+                                    Online Menggunakan Metode
+                                    DBSCAN (Density-Based Spatial
+                                    Clustering of Application With Noise) Berbasis Web.</li>
+                                <li>Dibuat menggunakan Code Igniter versi 3 dan MySQL.</li>
+                            </ul>
+                        </div>
+                        <span class="badge bg-primary rounded-pill">2021</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">SMAN 1 Pekaitan</div>
+                        </div>
+                        <span class="badge bg-primary rounded-pill">2014</span>
+                    </li>
+                </ol>
+            </div>
+        </section>
+        <section id="contact">
+            <h1><i class="fa-solid fa-address-card"></i> Kontak</h1>
+            <hr>
+            <div class="section-inner">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text">Mari tetap saling terhubung.</p>
                     </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><i class="fa-solid fa-envelope"></i> <a
+                                href="mailto:arifiny34@gmail.com" class="card-link">arifiny34@gmail.com</a></li>
+                        <li class="list-group-item"><i class="fa-brands fa-linkedin"></i>
+                            <a href="https://id.linkedin.com/in/iamaripin" target="blank" class="card-link">LinkedIn</a>
+                        </li>
+                        <li class="list-group-item"><i class="fa-brands fa-github"></i>
+                            <a href="https://github.com/iamaripin/" target="blank" class="card-link">Github</a>
+                        </li>
+                    </ul>
                 </div>
-            </section>
-
-            <section class="snap has-background-white" id="kontak">
-                <div class="container">
-                    <h3 class="title is-2">Kontak</h3>
-                    <hr>
-                    <p>Email: yusuf@example.com</p>
-                    <p>WhatsApp: +62 812-3456-7890</p>
-                    <p>LinkedIn: linkedin.com/in/yusufarifin</p>
+            </div>
+        </section>
+        <section id="download-cv">
+            <h1><i class="fa-solid fa-file-export"></i> CV</h1>
+            <hr>
+            <div class="card">
+                <div class="card-body" style="text-align: justify;height: 70vh;">
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
                 </div>
-            </section>
-
-            <section class="snap has-background-white" id="cv">
-                <div class="container">
-                    <h3 class="title is-2">CV</h3>
-                    <hr>
-                    <a class="button is-link" href="cv/yusuf-cv.pdf" target="_blank">Download CV (PDF)</a>
+                <div class="card-footer text-muted">
+                    2 days ago
                 </div>
-            </section>
-        </div>
-    </div>
+            </div>
+        </section>
+    </main>
 
-    <!-- Back to Top Button -->
-    <button id="backToTop" class="button is-primary is-rounded">↑ Top</button>
+    <button id="backToTop" class="btn btn-secondary back-to-top">↑ Top</button>
 
-    <!-- JavaScript -->
     <script>
-        // Scroll active section highlight (tetap)
-        const sections = document.querySelectorAll("section.snap");
-        const menuLinks = document.querySelectorAll(".menu-link");
-        const backToTop = document.getElementById("backToTop");
-        const scrollContainer = document.getElementById("mainScroll");
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const id = entry.target.id;
-                    menuLinks.forEach(link => {
-                        link.classList.toggle("is-active", link.dataset.section === id);
-                    });
-                }
-            });
-        }, {
-            root: scrollContainer,
-            threshold: 0.6
+        document.querySelector('.sidebar-toggle').addEventListener('click', function () {
+            document.querySelector('.sidebar').classList.toggle('show');
         });
 
-        sections.forEach(section => observer.observe(section));
+        const scrollContainer = document.getElementById("scrollContainer");
+        const backToTop = document.getElementById("backToTop");
+        const navLinks = document.querySelectorAll(".menu a");
+        const sections = document.querySelectorAll("section");
 
         scrollContainer.addEventListener("scroll", () => {
             backToTop.style.display = scrollContainer.scrollTop > 100 ? "block" : "none";
+
+            let index = sections.length;
+            while (--index && scrollContainer.scrollTop + 100 < sections[index].offsetTop) { }
+
+            navLinks.forEach(link => link.classList.remove("active"));
+            if (sections[index]) {
+                const id = sections[index].getAttribute("id");
+                const activeLink = document.querySelector(`.menu a[href="#${id}"]`);
+                if (activeLink) activeLink.classList.add("active");
+            }
         });
 
         backToTop.addEventListener("click", () => {
             scrollContainer.scrollTo({ top: 0, behavior: "smooth" });
         });
 
+        navLinks.forEach(link => {
+            link.addEventListener("click", function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute("href"));
+                if (target) {
+                    scrollContainer.scrollTo({
+                        top: target.offsetTop,
+                        behavior: "smooth"
+                    });
+                }
+                navLinks.forEach(l => l.classList.remove("active"));
+                this.classList.add("active");
+                if (window.innerWidth <= 768) {
+                    document.querySelector(".sidebar").classList.remove("show");
+                }
+            });
+        });
+
         // Typing effect
         const typingElement = document.getElementById("typing");
         const texts = ["Halo, saya Yusuf!", "Web Developer", "Backend Specialist"];
-        let textIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
+        let textIndex = 0, charIndex = 0, isDeleting = false;
 
         function type() {
             const currentText = texts[textIndex];
-            if (isDeleting) {
-                typingElement.textContent = currentText.substring(0, charIndex--);
-            } else {
-                typingElement.textContent = currentText.substring(0, charIndex++);
-            }
+            typingElement.textContent = isDeleting
+                ? currentText.substring(0, charIndex--)
+                : currentText.substring(0, charIndex++);
 
-            let delay = isDeleting ? 60 : 100;
-
+            let delay = isDeleting ? 100 : 200;
             if (!isDeleting && charIndex === currentText.length) {
-                delay = 1500; // jeda sebelum hapus
+                delay = 1500;
                 isDeleting = true;
             } else if (isDeleting && charIndex === 0) {
                 isDeleting = false;
                 textIndex = (textIndex + 1) % texts.length;
-                delay = 500; // jeda sebelum mulai teks baru
+                delay = 500;
             }
 
             setTimeout(type, delay);
         }
-
         type();
+
+        // Clock
+        function updateClock() {
+            const now = new Date();
+
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const tanggal = now.toLocaleDateString('id-ID', options);
+
+            let jam = now.getHours().toString().padStart(2, '0');
+            let menit = now.getMinutes().toString().padStart(2, '0');
+            let detik = now.getSeconds().toString().padStart(2, '0');
+
+            const waktu = `${jam}:${menit}:${detik}`;
+            document.getElementById('clock').innerHTML = `${tanggal} | ${waktu}`;
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
     </script>
 </body>
-
 
 </html>
